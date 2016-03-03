@@ -17,5 +17,6 @@
             email="gjhurlbu@gmail.com">
         Gavin Hurlbut
     </author>
+    <platform name="android" />
 
 </widget>
