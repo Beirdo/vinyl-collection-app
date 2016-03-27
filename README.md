@@ -1,12 +1,12 @@
--Vinyl Collection App-
+# Vinyl Collection App
 
---Attributions--
----Icon---
+## Attributions
+### Icon
 Icon from "Icon Shop" Icon pack by "Blaugrana-tez",
 licensed under Creative Commons Attribution Non-commercial (by-nc)
 Found at:  [icon-store]
 
----PhoneGap---
+### PhoneGap
 This application uses PhoneGap
 
 Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
@@ -23,7 +23,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-----PhoneGap NOTICES----
+#### PhoneGap NOTICES
 Adobe PhoneGap
 Copyright 2012-2014 Adobe Systems Incorporated.
 
