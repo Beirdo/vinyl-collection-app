@@ -10,6 +10,12 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.beirdo.vinylcollection"
         },
+        "cordova-plugin-googleplus": {
+            "PACKAGE_NAME": "com.beirdo.vinylcollection"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.beirdo.vinylcollection"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.beirdo.vinylcollection"
         },
