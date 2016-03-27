@@ -1,13 +1,13 @@
 {
-  "name": "phonegap-template-hello-world",
+  "name": "VinylCollection",
   "version": "1.0.0",
-  "description": "> A Hello World template built with PhoneGap",
+  "description": "Application to track a collection of LPs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/phonegap/phonegap-app-hello-world.git"
+    "url": "https://github.com/Beirdo/vinyl-collection-app.git"
   },
-  "author": "PhoneGap Team",
-  "license": "Apache-2.0.0",
+  "author": "Gavin Hurlbut",
+  "license": "MIT",
   "keywords": [
     "ecosystem:phonegap",
     "ecosystem:cordova",
@@ -15,7 +15,7 @@
     "phonegap:template"
   ],
   "bugs": {
-    "url": "https://github.com/phonegap/phonegap-app-hello-world/issues"
+    "url": "https://github.com/Beirdo/vinyl-collection-app/issues"
   },
-  "homepage": "https://github.com/phonegap/phonegap-app-hello-world"
-}
+  "homepage": "https://github.com/Beirdo/vinyl-collection-app"
+ }
