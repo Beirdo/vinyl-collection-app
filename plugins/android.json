@@ -7,10 +7,13 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.beirdo.vinylcollection"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.beirdo.vinylcollection"
         },
-        "cordova-plugin-camera": {
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.beirdo.vinylcollection"
         }
     },
