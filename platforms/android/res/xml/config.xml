@@ -10,6 +10,7 @@
     </author>
     <content src="index.html" />
     <preference name="permissions" value="none" />
+    <gap:platform name="android" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />

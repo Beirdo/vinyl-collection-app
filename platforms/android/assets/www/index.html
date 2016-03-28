@@ -63,7 +63,7 @@
   }
   function login() {
     window.plugins.googleplus.login(
-        {},
+        { 'offline': true, 'androidApiKey': '281004210608-scr1pmejialm5e97io5ao4cqfc9md7bl.apps.googleusercontent.com' },
         function (obj) {
           document.querySelector("#image").src = obj.imageUrl;
           document.querySelector("#image").style.visibility = 'visible';
@@ -76,27 +76,24 @@
   }
   function trySilentLogin() {
     window.plugins.googleplus.trySilentLogin(
-        {},
+        { 'offline': true, 'androidApiKey': '281004210608-scr1pmejialm5e97io5ao4cqfc9md7bl.apps.googleusercontent.com' },
         function (obj) {
           document.querySelector("#image").src = obj.imageUrl;
           document.querySelector("#image").style.visibility = 'visible';
           document.querySelector("#feedback").innerHTML = "Silent hi, " + obj.displayName + ", " + obj.email;
-        var id_token = obj.idToken;
 
         AWS.config.region = "us-east-1";
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'e41d9661-01a5-4afb-ba65-f47b37bedcd1',
-            Logins: {
-                'accounts.google.com': id_token
-            }
-        });
-        AWS.config.credentials.get(function() {
-            var accessKeyId = AWS.config.credentials.accessKeyId;
-            var secretAccessKey = AWS.config.credentials.secretAccessKey;
-            var sessionToken = AWS.config.credentials.sessionToken;
+        var params = {
+            RoleArn: 'arn:aws:iam::890058568674:role/VinylAppGoogleAndroid',
+            WebIdentityToken: obj.idToken
+        };
+        AWS.config.credentials = new AWS.WebIdentityCredentials(params);
+        document.querySelector("#feedback").innerHTML = JSON.stringify(obj);
 
-          document.querySelector("#feedback").innerHTML = accessKeyId;
-        });
+	AWS.config.credentials.refresh();
+        document.querySelector("#feedback").innerHTML = AWS.config.credentials.accessKeyId;
+
+        AWS.config.region = "us-west-2";
         },
         function (msg) {
           document.querySelector("#feedback").innerHTML = "error: " + msg;
