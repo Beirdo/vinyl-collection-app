@@ -1,6 +1,21 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
+        "file": "plugins/com.oauthio.plugins.oauthio/dist/oauth.js",
+        "id": "com.oauthio.plugins.oauthio.OAuth",
+        "merges": [
+            "OAuth"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "id": "cordova-plugin-camera.Camera",
         "clobbers": [
@@ -36,14 +51,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-        "id": "cordova-plugin-inappbrowser.inappbrowser",
-        "clobbers": [
-            "cordova.InAppBrowser.open",
-            "window.open"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-whitelist/whitelist.js",
         "id": "cordova-plugin-whitelist.whitelist",
         "runs": true
@@ -59,9 +66,10 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "cordova-plugin-inappbrowser": "1.2.1",
+    "com.oauthio.plugins.oauthio": "0.2.4",
     "cordova-plugin-camera": "2.1.1",
     "cordova-plugin-googleplus": "4.0.8",
-    "cordova-plugin-inappbrowser": "1.2.1",
     "cordova-plugin-whitelist": "1.2.1",
     "phonegap-plugin-barcodescanner": "4.1.0"
 };

@@ -1,24 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
     <head>
         <meta charset="utf-8" />
@@ -55,6 +35,7 @@
         <script type="text/javascript" src="js/aws-sdk.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+<!--        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script> -->
         <script type="text/javascript">
             app.initialize();
 
@@ -63,7 +44,7 @@
   }
   function login() {
     window.plugins.googleplus.login(
-        { 'offline': true, 'androidApiKey': '281004210608-scr1pmejialm5e97io5ao4cqfc9md7bl.apps.googleusercontent.com' },
+        { 'offline': true, 'webApiKey': '281004210608-mi8rfai1qd5508s0srq55adppfm1l9u5.apps.googleusercontent.com' },
         function (obj) {
           document.querySelector("#image").src = obj.imageUrl;
           document.querySelector("#image").style.visibility = 'visible';
@@ -75,30 +56,26 @@
     );
   }
   function trySilentLogin() {
-    window.plugins.googleplus.trySilentLogin(
-        { 'offline': true, 'androidApiKey': '281004210608-scr1pmejialm5e97io5ao4cqfc9md7bl.apps.googleusercontent.com' },
-        function (obj) {
-          document.querySelector("#image").src = obj.imageUrl;
-          document.querySelector("#image").style.visibility = 'visible';
-          document.querySelector("#feedback").innerHTML = "Silent hi, " + obj.displayName + ", " + obj.email;
+    OAuth.initialize('Ihw78JWF5ziCxkW7v8nHmhtctBU');
+    OAuth.popup('google_plus', { cache: true }).done(function(result) {
+        result.me().done(function(data) {
+            // do something
+        });
+        console.log(result);
 
         AWS.config.region = "us-east-1";
         var params = {
             RoleArn: 'arn:aws:iam::890058568674:role/VinylAppGoogleAndroid',
-            WebIdentityToken: obj.idToken
+            WebIdentityToken: result.id_token
         };
         AWS.config.credentials = new AWS.WebIdentityCredentials(params);
-        document.querySelector("#feedback").innerHTML = JSON.stringify(obj);
-
 	AWS.config.credentials.refresh();
         document.querySelector("#feedback").innerHTML = AWS.config.credentials.accessKeyId;
 
         AWS.config.region = "us-west-2";
-        },
-        function (msg) {
-          document.querySelector("#feedback").innerHTML = "error: " + msg;
-        }
-    );
+   }).fail(function(err) {
+        document.querySelector("#feedback").innerHTML = "error: " + err;
+   });
   }
   function logout() {
     window.plugins.googleplus.logout(

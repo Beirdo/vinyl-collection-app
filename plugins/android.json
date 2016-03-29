@@ -7,6 +7,9 @@
         "files": {}
     },
     "installed_plugins": {
+        "com.oauthio.plugins.oauthio": {
+            "PACKAGE_NAME": "com.beirdo.vinylcollection"
+        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.beirdo.vinylcollection"
         },

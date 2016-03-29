@@ -62,6 +62,7 @@
     <plugin name="cordova-plugin-inappbrowser" source="npm" />
     <plugin name="phonegap-plugin-barcodescanner" source="npm" />
     <plugin name="cordova-plugin-googleplus" source="npm" />
+    <plugin spec="https://github.com/oauth-io/oauth-phonegap" source="git" />
 
     <!-- Define app icon for each platform. -->
     <icon src="icon.png" />
