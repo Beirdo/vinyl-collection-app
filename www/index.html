@@ -43,6 +43,7 @@
     window.plugins.googleplus.isAvailable(function(avail) {alert(avail)});
   }
   function login() {
+    //OAuth.popup('google_plus', { cache: true }).done(function(result) {
     window.plugins.googleplus.login(
         { 'offline': true, 'webApiKey': '281004210608-mi8rfai1qd5508s0srq55adppfm1l9u5.apps.googleusercontent.com' },
         function (obj) {
@@ -57,22 +58,23 @@
   }
   function trySilentLogin() {
     OAuth.initialize('Ihw78JWF5ziCxkW7v8nHmhtctBU');
-    OAuth.popup('google_plus', { cache: true }).done(function(result) {
-        result.me().done(function(data) {
-            // do something
-        });
-        console.log(result);
+    OAuth.popup('google_plus').done(function(result) {
+        console.log(JSON.stringify(result));
 
         AWS.config.region = "us-east-1";
         var params = {
-            RoleArn: 'arn:aws:iam::890058568674:role/VinylAppGoogleAndroid',
-            WebIdentityToken: result.id_token
+            IdentityPoolId: 'us-east-1:e41d9661-01a5-4afb-ba65-f47b37bedcd1',
+            Logins: {
+               'accounts.google.com': result.id_token
+            }
         };
-        AWS.config.credentials = new AWS.WebIdentityCredentials(params);
-	AWS.config.credentials.refresh();
-        document.querySelector("#feedback").innerHTML = AWS.config.credentials.accessKeyId;
+        console.log(JSON.stringify(params));
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
+	AWS.config.credentials.refresh(function(error) {
+            document.querySelector("#feedback").innerHTML = AWS.config.credentials.accessKeyId;
+            AWS.config.region = "us-west-2";
+        });
 
-        AWS.config.region = "us-west-2";
    }).fail(function(err) {
         document.querySelector("#feedback").innerHTML = "error: " + err;
    });
