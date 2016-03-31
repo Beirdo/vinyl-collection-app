@@ -22,10 +22,6 @@
     <p id="feedback">not logged in</p>
     <button onclick="isAvailable()">Available?</button>
     <br/><br/>
-    <button onclick="login()">Login with Google+</button>
-    <br/><br/>
-    <button onclick="trySilentLogin()">Try silent login with Google+</button>
-    <br/><br/>
     <button onclick="logout()">Logout</button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button onclick="disconnect()">Disconnect</button>
@@ -35,75 +31,9 @@
         <script type="text/javascript" src="js/aws-sdk.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-<!--        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script> -->
+        <script type="text/javascript" src="js/auth.js"></script>
         <script type="text/javascript">
             app.initialize();
-
-  function isAvailable() {
-    window.plugins.googleplus.isAvailable(function(avail) {alert(avail)});
-  }
-  function login() {
-    //OAuth.popup('google_plus', { cache: true }).done(function(result) {
-    window.plugins.googleplus.login(
-        { 'offline': true, 'scopes': 'profile email',
-          'webClientId': '281004210608-u8qtp7kq3b0ue0hud116vis7ll5kk1r2.apps.googleusercontent.com' },
-        function (obj) {
-          document.querySelector("#image").src = obj.imageUrl;
-          document.querySelector("#image").style.visibility = 'visible';
-<!--          document.querySelector("#feedback").innerHTML = "Hi, " + obj.displayName + ", " + obj.email; -->
-          document.querySelector("#feedback").innerHTML = JSON.stringify(obj);
-        },
-        function (msg) {
-          document.querySelector("#feedback").innerHTML = "error: " + msg;
-        }
-    );
-  }
-  function trySilentLogin() {
-    OAuth.initialize('Ihw78JWF5ziCxkW7v8nHmhtctBU');
-    OAuth.popup('google_plus').done(function(result) {
-        console.log(JSON.stringify(result));
-
-        AWS.config.region = "us-east-1";
-        var params = {
-            IdentityPoolId: 'us-east-1:e41d9661-01a5-4afb-ba65-f47b37bedcd1',
-            Logins: {
-               'accounts.google.com': result.id_token
-            }
-        };
-        console.log(JSON.stringify(params));
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
-	AWS.config.credentials.refresh(function(error) {
-            document.querySelector("#feedback").innerHTML = AWS.config.credentials.accessKeyId;
-            AWS.config.region = "us-west-2";
-        });
-
-   }).fail(function(err) {
-        document.querySelector("#feedback").innerHTML = "error: " + err;
-   });
-  }
-  function logout() {
-    window.plugins.googleplus.logout(
-        function (msg) {
-          document.querySelector("#image").style.visibility = 'hidden';
-          document.querySelector("#feedback").innerHTML = msg;
-        }
-    );
-  }
-  function disconnect() {
-    window.plugins.googleplus.disconnect(
-        function (msg) {
-          document.querySelector("#image").style.visibility = 'hidden';
-          document.querySelector("#feedback").innerHTML = msg;
-        }
-    );
-  }
-  window.onerror = function(what, line, file) {
-    alert(what + '; ' + line + '; ' + file);
-  };
-  function handleOpenURL (url) {
-    document.querySelector("#feedback").innerHTML = "App was opened by URL: " + url;
-  }
-
         </script>
     </body>
 </html>
