@@ -45,7 +45,8 @@
   function login() {
     //OAuth.popup('google_plus', { cache: true }).done(function(result) {
     window.plugins.googleplus.login(
-        { 'offline': true, 'webApiKey': '281004210608-mi8rfai1qd5508s0srq55adppfm1l9u5.apps.googleusercontent.com' },
+        { 'offline': true, 'scopes': 'oauth profile email',
+          'webApiKey': '281004210608-u8qtp7kq3b0ue0hud116vis7ll5kk1r2.apps.googleusercontent.com' },
         function (obj) {
           document.querySelector("#image").src = obj.imageUrl;
           document.querySelector("#image").style.visibility = 'visible';
