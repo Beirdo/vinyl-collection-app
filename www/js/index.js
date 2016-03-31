@@ -46,6 +46,6 @@ var app = {
 
         console.log('Received Event: ' + id);
 
-	trySilentLogin();
+	global.api.pollResponse("asfasfd");
     }
 };
