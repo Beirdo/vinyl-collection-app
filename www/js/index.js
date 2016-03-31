@@ -46,6 +46,6 @@ var app = {
 
         console.log('Received Event: ' + id);
 
-	global.api.pollResponse("asfasfd");
+	api.pollResponse("asfasfd");
     }
 };
