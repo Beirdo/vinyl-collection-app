@@ -45,12 +45,13 @@
   function login() {
     //OAuth.popup('google_plus', { cache: true }).done(function(result) {
     window.plugins.googleplus.login(
-        { 'offline': true, 'scopes': 'oauth profile email',
-          'webApiKey': '281004210608-u8qtp7kq3b0ue0hud116vis7ll5kk1r2.apps.googleusercontent.com' },
+        { 'offline': true, 'scopes': 'profile email',
+          'webClientId': '281004210608-u8qtp7kq3b0ue0hud116vis7ll5kk1r2.apps.googleusercontent.com' },
         function (obj) {
           document.querySelector("#image").src = obj.imageUrl;
           document.querySelector("#image").style.visibility = 'visible';
-          document.querySelector("#feedback").innerHTML = "Hi, " + obj.displayName + ", " + obj.email;
+<!--          document.querySelector("#feedback").innerHTML = "Hi, " + obj.displayName + ", " + obj.email; -->
+          document.querySelector("#feedback").innerHTML = JSON.stringify(obj);
         },
         function (msg) {
           document.querySelector("#feedback").innerHTML = "error: " + msg;
