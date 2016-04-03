@@ -4,20 +4,7 @@ var React = require("react");
 var $ = require("jquery");
 var _ = require("underscore");
 
-var Footer = require("common/commonComponents").Footer;
-
-var Home = React.createClass({
-      render: function() {
-        return (
-            <div className="reactComponentContainer">
-                    <Content name={this.props.name}/>
-
-            </div>
-        );
-      }
-});
-exports.Home = Home;
-
+// var Footer = require("common/commonComponents").Footer;
 
 var Content = React.createClass({
 
@@ -51,4 +38,16 @@ var Content = React.createClass({
       }
 
 });
+
+var Home = React.createClass({
+      render: function() {
+        return (
+            <div className="reactComponentContainer">
+               <Content name={this.props.name}/>
+            </div>
+        );
+      }
+});
+
+exports.Home = Home;
 exports.Content = Content;

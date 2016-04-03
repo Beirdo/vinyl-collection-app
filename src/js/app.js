@@ -1,5 +1,6 @@
 
 var React = require("react");
+var ReactDOM = require("react-dom");
 var HomeComponents = require("home/homeComponents");
 
 var app = {
@@ -13,11 +14,11 @@ var app = {
 
         var mountNode = document.getElementById('reactAppContainer');
 
-        var mountComponent = HomeComponents.Home({
+        var mountComponent = React.createElement(HomeComponents.Home, {
             name: "Dear user!"
         });
 
-        React.renderComponent(mountComponent,mountNode);
+        ReactDOM.render(mountComponent, mountNode);
 
         console.log("React should now be loaded");
     }

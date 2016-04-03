@@ -12,8 +12,7 @@ gulp.task('browserify', function(){
     return browserify({
         entries: ['./src/js/app.js'],
         extensions: ['.jsx'],
-        paths: ['./node_modules','./src/js/'],
-        debug: true
+        paths: ['./node_modules','./src/js/']
     })
         .transform('reactify')
         .bundle()
