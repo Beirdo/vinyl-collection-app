@@ -4,7 +4,7 @@ var React = require("react");
 var $ = require("jquery");
 var _ = require("underscore");
 
-// var Footer = require("common/commonComponents").Footer;
+var Footer = require("common/commonComponents").Footer;
 
 var Content = React.createClass({
 
@@ -41,9 +41,17 @@ var Content = React.createClass({
 
 var Home = React.createClass({
       render: function() {
+        imgStyle = {
+            position: 'absolute',
+            top: '10px',
+            left: '10px'
+        };
         return (
             <div className="reactComponentContainer">
                <Content name={this.props.name}/>
+               <img id="image" style={imgStyle} src="" />
+               <p id="feedback">not logged in</p>
+               <Footer/>
             </div>
         );
       }
