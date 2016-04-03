@@ -1,6 +1,20 @@
 # OS X
 .DS_Store
 *.swp
-*~
 *.bak
-.cordova
+.cordova/config.json
+
+*~
+**~
+
+platforms/**
+plugins/**
+
+!platforms/REQUIRED_EMPTY_FILE_BECAUSE_OF_CB-6705
+!plugins/REQUIRED_EMPTY_FILE_BECAUSE_OF_CB-6705
+
+node_modules
+www
+
+.idea
+*.iml
