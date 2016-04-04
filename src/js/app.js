@@ -20,7 +20,14 @@ var app = {
         });
         ReactDOM.render(mountComponent, mountNode);
 
-        Api.pollResponse("blahblahlbah");
+        Api.pollResponse("blahblahlbah", function(resp, error) {
+          if (error) {
+            console.log("ERROR: " + error);
+            return;
+          }
+          console.log(resp);
+          document.querySelector("#feedback").innerHTML = resp;
+        });
 
         console.log("React should now be loaded");
     }

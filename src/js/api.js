@@ -13,14 +13,20 @@ var api = {
     userAgent: "BeirdoVinylCollectionApp/1.0",
 
     getCredentials: function(callback) {
-      Auth.trySilentLogin();
-      var storage = window.localStorage;
-      var credentials = { 
+      Auth.login(function(error) {
+        if (error) {
+          callback({}, error);
+          return;
+        }
+
+        var storage = window.localStorage;
+        var credentials = {
           accessKeyId: storage.getItem('accessKeyId'),
           secretAccessKey: storage.getItem('secretKey'),
           sessionToken: storage.getItem('sessionToken')
-      };
-      callback(credentials);
+        };
+        callback(credentials);
+      });
     },
 
     request: function(o, callback) {
@@ -58,15 +64,15 @@ var api = {
         signed.headers['User-Agent'] = api.userAgent;
         return signed;
     },
-      
-    pollResponse: function(id) {
-      api.getCredentials(function(credentials) {
+
+    pollResponse: function(id, callback) {
+      api.getCredentials(function(credentials, error) {
+        if (error) {
+          callback("", error);
+        }
         var opts = api.prepare("/poll-response", {requestId: id},
                                "application/json", credentials);
-	api.request(opts, function(res) {
-          console.log(res);
-          document.querySelector("#feedback").innerHTML = res;
-        });
+	api.request(opts, callback);
       });
     }
 }
