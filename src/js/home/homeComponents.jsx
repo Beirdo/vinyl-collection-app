@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require("react");
+var ReactDOM = require("react-dom");
 var $ = require("jquery");
 var _ = require("underscore");
 
@@ -12,12 +13,12 @@ var Content = React.createClass({
       componentDidMount: function() {
         var self = this;
         var counter = 0;
-        setInterval(function() {
-            counter++;
-            $(self.getDOMNode())
-              .find(".jqueryUptadable")
-              .text("Updated by JQuery! -> "+counter);
-        },1000);
+//        setInterval(function() {
+//            counter++;
+ //           $(self.refs)
+  //            .find(".jqueryUptadable")
+   //           .text("Updated by JQuery! -> "+counter);
+    //    },1000);
         console.debug("interval set");
 
       },

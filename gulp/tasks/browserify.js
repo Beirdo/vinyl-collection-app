@@ -7,13 +7,14 @@ var source       = require('vinyl-source-stream');
 
 gulp.task('browserify', function(){
 
-
+    //process.env.BROWSERIFYSHIM_DIAGNOSTICS=1;
     // TODO maybe it's worth trying to integrate watchify
     return browserify({
         entries: ['./src/js/app.js'],
         extensions: ['.jsx'],
         paths: ['./node_modules','./src/js/']
     })
+        .transform('aliasify', {global: true})
         .transform('reactify')
         .bundle()
         .on('error', handleErrors)
