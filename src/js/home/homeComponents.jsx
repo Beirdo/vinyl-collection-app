@@ -4,6 +4,7 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var $ = require("jquery");
 var _ = require("underscore");
+var VinylCollection = require('vinylcollection');
 
 var Footer = require("common/commonComponents").Footer;
 
@@ -52,6 +53,7 @@ var Home = React.createClass({
                <Content name={this.props.name}/>
                <img id="image" style={imgStyle} src="" />
                <p id="feedback">not logged in</p>
+               <button onClick={VinylCollection.photoSearch}>Search for an album</button>
                <Footer/>
             </div>
         );
