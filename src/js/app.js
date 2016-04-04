@@ -2,11 +2,9 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 var HomeComponents = require("home/homeComponents");
-var Auth = require("auth");
-var Api = require("api");
+var VinylCollection = require("vinylcollection");
 
 var app = {
-
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
@@ -19,19 +17,16 @@ var app = {
             name: window.localStorage.getItem("username")
         });
         ReactDOM.render(mountComponent, mountNode);
-
-        Api.pollResponse("blahblahlbah", function(resp, error) {
-          if (error) {
-            console.log("ERROR: " + error);
-            return;
-          }
-          console.log(resp);
-          document.querySelector("#feedback").innerHTML = resp;
-        });
-
         console.log("React should now be loaded");
-    }
+    },
 
+    photoSearch: function() {
+	VinylCollection.photoSearch();
+    },
+
+    albumSearch: function(album, title, release) {
+        VinylCollection.albumSearch(album, title, release);
+    }
 };
 
 app.initialize();

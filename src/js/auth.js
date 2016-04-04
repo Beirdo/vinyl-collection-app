@@ -44,9 +44,7 @@ var authFuncs = {
     AWS.config.region = "us-east-1";
     var awsParams = {
       IdentityPoolId: 'us-east-1:e41d9661-01a5-4afb-ba65-f47b37bedcd1',
-      Logins: {
-         'accounts.google.com': obj.idToken
-      }
+      Logins: { 'accounts.google.com': obj.idToken }
     };
     console.log(JSON.stringify(awsParams));
     AWS.config.credentials = new AWS.CognitoIdentityCredentials(awsParams);

@@ -1,6 +1,7 @@
 var https = require('https');
 var aws4 = require('aws4');
 var Auth = require('auth');
+var MD5 = require('md5');
 
 var api = {
     opts: {
@@ -35,7 +36,7 @@ var api = {
         console.log('headers: ' + JSON.stringify(res.headers));
 
         res.on('data', (d) => {
-          callback(d);
+          callback(JSON.parse(d));
         });
       });
 
@@ -47,8 +48,11 @@ var api = {
       req.end();
     },
 
-    prepare: function(path, body, type, credentials) {
+    prepare: function(path, body, type, extraHeaders, credentials) {
         var opts = JSON.parse(JSON.stringify(api.opts));
+        for (var prop in extraHeaders) {
+            opts.headers[prop] = extraHeaders[prop];
+        }
         opts.path = "/prod" + path;
         if (type == "application/json") {
           opts.body = JSON.stringify(body);
@@ -71,10 +75,76 @@ var api = {
           callback("", error);
         }
         var opts = api.prepare("/poll-response", {requestId: id},
-                               "application/json", credentials);
+                               "application/json", {}, credentials);
+	api.request(opts, callback);
+      });
+    },
+
+    imageSearch: function(filename, callback) {
+      api.getCredentials(function(credentials, error) {
+        if (error) {
+          callback("", error);
+        }
+
+        var reader = new FileReader();
+        var rawData = '';
+        reader.onload = function(e) {
+          rawData = reader.result;
+        }
+        reader.readAsArrayBuffer(filename);
+
+	var basename = filename.split('/').pop();
+        var dataMD5 = MD5(rawData);
+        var base64data = window.btoa(rawData);
+        var extraHeaders = { "Content-MD5": dataMD5 };
+        var opts = api.prepare("/image-search/" + basename, base64data,
+                               "image/jpeg", extraHeaders, credentials);
+	api.request(opts, callback);
+      });
+    },
+
+    pollImage: function(filename, doDelete, callback) {
+      api.getCredentials(function(credentials, error) {
+        if (error) {
+          callback("", error);
+        }
+        var reader = new FileReader();
+        var rawData = '';
+        reader.onload = function(e) {
+          rawData = reader.result;
+        }
+        reader.readAsArrayBuffer(filename);
+
+	var basename = filename.split('/').pop();
+        var filesize = rawData.length();
+        var params = {filename: basename, filesize: filesize, delete: doDelete};
+        var opts = api.prepare("/poll-image", params,
+                               "application/json", {}, credentials);
+	api.request(opts, callback);
+      });
+    },
+
+    search: function(artist, title, release, callback) {
+      api.getCredentials(function(credentials, error) {
+        if (error) {
+          callback("", error);
+        }
+        var params = {};
+        if (artist) {
+           params.artist = artist;
+        }
+        if (title) {
+           params.title = title;
+        }
+        if (release) {
+           params.release = release;
+        }
+        var opts = api.prepare("/search", params,
+                               "application/json", {}, credentials);
 	api.request(opts, callback);
       });
     }
+
 }
 
 module.exports = api;
