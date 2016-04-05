@@ -5,9 +5,25 @@ var collection = {
     fileName: '',
     requestId: '',
     postPollAction: '',
+
+    barcode: function() {
+      cordova.plugins.barcodeScanner.scan(
+        function (result) {
+          alert("We got a barcode\n" +
+                "Result: " + result.text + "\n" +
+                "Format: " + result.format + "\n" +
+                "Cancelled: " + result.cancelled);
+        },
+        function (error) {
+          alert("Scanning failed: " + error);
+        }
+      );
+    },
+
     photoSearch: function() {
         navigator.camera.getPicture(function(data) {
             collection.fileName = data;
+            console.log(data);
             Api.imageSearch(data, collection.getPhotoRequestId);
           },
           function(error) {

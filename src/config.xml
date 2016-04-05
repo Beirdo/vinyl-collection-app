@@ -53,12 +53,14 @@
     <preference name="phonegap-version" value="cli-5.2.0" />
     <preference name="android-targetSdkVersion" value="19" />
     <preference name="android-build-tool" value="gradle" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     <!-- Plugins -->
 
     <!-- Core plugins -->
     <plugin name="cordova-plugin-camera" source="npm" />
     <plugin name="cordova-plugin-whitelist" source="npm" />
+    <plugin name="cordova-plugin-file" source="npm" />
     <plugin name="phonegap-plugin-barcodescanner" source="npm" />
 <!--    <plugin name="cordova-plugin-googleplus" source="npm" /> -->
     <plugin spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus" source="git" />

@@ -53,6 +53,7 @@ var Home = React.createClass({
                <Content name={this.props.name}/>
                <img id="image" style={imgStyle} src="" />
                <p id="feedback">not logged in</p>
+               <button onClick={VinylCollection.barcode}>Scan barcode</button>
                <button onClick={VinylCollection.photoSearch}>Search for an album</button>
                <Footer/>
             </div>

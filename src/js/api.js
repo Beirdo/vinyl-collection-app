@@ -26,6 +26,7 @@ var api = {
           secretAccessKey: storage.getItem('secretKey'),
           sessionToken: storage.getItem('sessionToken')
         };
+        console.log(JSON.stringify(credentials));
         callback(credentials);
       });
     },
@@ -82,16 +83,33 @@ var api = {
 
     imageSearch: function(filename, callback) {
       api.getCredentials(function(credentials, error) {
+        console.log("got here " + callback);
+        console.log("error " + error);
         if (error) {
           callback("", error);
         }
 
-        var reader = new FileReader();
         var rawData = '';
-        reader.onload = function(e) {
-          rawData = reader.result;
+        console.log("resolve: " + window.resolveLocalFileSystemURI);
+        window.resolveLocalFileSystemURI(filename, function(oFile) {
+          console.log("resolved to: " + oFile);
+          oFile.file(function(readyFile) {
+            console.log("readyFile: " + readyFile);
+            var reader = new FileReader();
+            reader.onloadend = function(evt) {
+              console.log("Event: " + evt);
+              rawData = evt.target.result;
+            };
+
+            reader.readAsArrayBuffer(readyFile);
+          });
+        }, function(err) {
+          console.log("ERROR: " + JSON.stringify(error));
+        });
+
+        if (rawData.length() == 0) {
+          return;
         }
-        reader.readAsArrayBuffer(filename);
 
 	var basename = filename.split('/').pop();
         var dataMD5 = MD5(rawData);
@@ -99,6 +117,7 @@ var api = {
         var extraHeaders = { "Content-MD5": dataMD5 };
         var opts = api.prepare("/image-search/" + basename, base64data,
                                "image/jpeg", extraHeaders, credentials);
+        console.log(JSON.stringify(opts));
 	api.request(opts, callback);
       });
     },
@@ -108,12 +127,19 @@ var api = {
         if (error) {
           callback("", error);
         }
-        var reader = new FileReader();
-        var rawData = '';
-        reader.onload = function(e) {
-          rawData = reader.result;
-        }
-        reader.readAsArrayBuffer(filename);
+
+        window.resolveLocalFileSystemURL(filename, function(oFile) {
+          oFile.file(function(readyFile) {
+            var reader = new FileReader();
+            reader.onloadend = function(evt) {
+              rawData = evt.target.result;
+            };
+
+            reader.readAsArrayBuffer(readyFile);
+          });
+        }, function(err) {
+          console.log("ERROR: " + JSON.stringify(error));
+        });
 
 	var basename = filename.split('/').pop();
         var filesize = rawData.length();

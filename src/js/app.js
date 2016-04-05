@@ -18,14 +18,6 @@ var app = {
         });
         ReactDOM.render(mountComponent, mountNode);
         console.log("React should now be loaded");
-    },
-
-    photoSearch: function() {
-	VinylCollection.photoSearch();
-    },
-
-    albumSearch: function(album, title, release) {
-        VinylCollection.albumSearch(album, title, release);
     }
 };
 
