@@ -38,6 +38,8 @@ var api = {
     request: function(o, callback) {
       console.log("api.request");
       o.url = "https://" + o.host + o.path;
+      o.gzip = true;
+      o.timeout = 10000;
       api.callback = callback;
       console.log("Path: " + o.path);
       request(o, api.response);
