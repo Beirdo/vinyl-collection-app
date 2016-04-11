@@ -61,6 +61,7 @@
     <plugin name="cordova-plugin-camera" source="npm" />
     <plugin name="cordova-plugin-whitelist" source="npm" />
     <plugin name="cordova-plugin-file" source="npm" />
+<!--    <plugin spec="https://github.com/Beirdo/cordova-plugin-file" source="git" /> -->
     <plugin name="phonegap-plugin-barcodescanner" source="npm" />
 <!--    <plugin name="cordova-plugin-googleplus" source="npm" /> -->
     <plugin spec="https://github.com/EddyVerbruggen/cordova-plugin-googleplus" source="git" />

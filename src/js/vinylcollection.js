@@ -1,5 +1,6 @@
 var Api = require("api");
 var _ = require('underscore');
+var imagefile = require("imagefile");
 
 var collection = {
     fileName: '',
@@ -7,6 +8,7 @@ var collection = {
     postPollAction: '',
 
     barcode: function() {
+      console.log("collection.barcode");
       cordova.plugins.barcodeScanner.scan(
         function (result) {
           alert("We got a barcode\n" +
@@ -21,6 +23,7 @@ var collection = {
     },
 
     photoSearch: function() {
+        console.log("collection.photoSearch");
         navigator.camera.getPicture(function(data) {
             collection.fileName = data;
             console.log(data);
@@ -35,21 +38,33 @@ var collection = {
     },
 
     getPhotoRequestId: function(resp, error) {
+        console.log("collection.getPhotoRequestId");
         if (error) {
             console.log("ERROR: " + error);
             return;
         }
 
-        // Ignore the response here, it's useless
+        if (resp.request_id) {
+            collection.startPollImageResponse(resp, error);
+        } else {
+            // Ignore the response here, it's useless
+            window.setTimeout(collection.pollPhotoRequestId, 2000);
+        }
+    },
+
+    pollPhotoRequestId: function() {
+        console.log("collection.pollPhotoRequestId");
         Api.pollImage(collection.fileName, false,
-                      collection.startPollImageResponse);
+                      collection.getPhotoRequestId);
     },
 
     albumSearch: function(artist, title, release) {
+        console.log("collection.albumSearch");
         Api.search(artist, title, release, collection.startPollSearchResponse);
     },
 
     startPollSearchResponse: function(resp, error) {
+        console.log("collection.startPollSearchReponse");
         if (error) {
             console.log("ERROR: " + error);
             return;
@@ -59,6 +74,7 @@ var collection = {
     },
 
     startPollImageResponse: function(resp, error) {
+        console.log("collection.startPollImageReponse");
         if (error) {
             console.log("ERROR: " + error);
             return;
@@ -68,47 +84,46 @@ var collection = {
     },
 
     startPollResponse: function(resp, postPollAction) {
+        console.log("collection.startPollReponse");
 	collection.requestId = resp.request_id;
         collection.postPollAction = postPollAction;
-        pollResponse();
+        collection.pollResponse();
     },
 
     pollResponse: function() {
-	var looping = false;
+        console.log("collection.pollReponse");
         Api.pollResponse(collection.requestId, function(resp, error) {
             if (error) {
                 console.log("ERROR: " + error);
             } else if (_.isEmpty(resp)) {
-                looping = true;
                 window.setTimeout(collection.pollResponse, 5000);
             } else {
                 collection.displayResults(resp);
             }
         });
-
-        if (!looping) {
-            if (_.isFunction(collection.postPollAction)) {
-                collection.postPollAction();
-            }
-        }
     },
 
     deleteImageRequest: function() {
+        console.log("collection.deleteImageRequest");
         Api.pollImage(collection.fileName, true, collection.deletePhoto);
     },
 
     displayResults: function(results) {
+        console.log("collection.displayResults");
         document.querySelector("#feedback").innerHTML = JSON.stringify(results);
+        if (_.isFunction(collection.postPollAction)) {
+            collection.postPollAction();
+        }
     },
         
     deletePhoto: function(resp, error) {
+        console.log("collection.deletePhoto");
         if (error) {
             console.log("ERROR: " + error);
             return;
         }
 
-        // Once I figure out HOW, delete the local cached photo
-        // located at collection.fileName
+        imagefile.deleteFile(collection.fileName);
     }
 };
 
