@@ -48,9 +48,9 @@ var api = {
     response: function(error, response, body) {
       console.log("api.response");
       if (error) {
-        console.log(JSON.stringify(e));
+        console.log(JSON.stringify(error));
         if (_.isFunction(api.callback)) {
-          api.callback("", e);
+          api.callback("", error);
         }
         return;
       }
